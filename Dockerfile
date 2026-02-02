@@ -2,10 +2,6 @@ FROM public.ecr.aws/spacelift/runner-terraform:latest
 
 USER root
 
-RUN chmod +x /tmp/install-certs.sh && \
-    /tmp/install-certs.sh && \
-    rm -rf /tmp/install-certs.sh /tmp/certs
-
 RUN apk add --no-cache \
         python3 \
         py3-pip \
