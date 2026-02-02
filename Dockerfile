@@ -3,6 +3,7 @@ FROM public.ecr.aws/spacelift/runner-terraform:latest
 USER root
 
 RUN apk add --no-cache \
+        docker-cli \
         python3 \
         py3-pip \
         krb5 \
