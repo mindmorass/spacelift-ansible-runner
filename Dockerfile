@@ -16,6 +16,7 @@ RUN apk add --no-cache \
         libffi-dev && \
     pip3 install --no-cache-dir --break-system-packages \
         ansible \
+        ansible-runner \
         pywinrm[kerberos] && \
     apk del .build-deps
 
