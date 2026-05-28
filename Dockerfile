@@ -1,28 +1,35 @@
-FROM public.ecr.aws/spacelift/runner-terraform:latest
+FROM ubuntu:24.04
 
+# Switch to root for system changes
 USER root
 
-RUN apk add --no-cache \
-        docker-cli \
+# Create spacelift user
+RUN groupadd -r spacelift && useradd -r -g spacelift spacelift
+
+# Install system dependencies and Python packages for WinRM testing
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        sshpass \
         python3 \
-        py3-pip \
-        krb5 \
-        libffi && \
-    apk add --no-cache --virtual .build-deps \
-        krb5-dev \
-        gcc \
-        musl-dev \
+        python3-pip \
         python3-dev \
-        libffi-dev && \
+        build-essential \
+        libffi-dev \
+        libssl-dev \
+        libkrb5-dev \
+        krb5-user \
+        ca-certificates \
+        curl \
+        git && \
     pip3 install --no-cache-dir --break-system-packages \
         ansible \
-        ansible-runner \
         pywinrm[kerberos] && \
-    apk del .build-deps
+    apt-get purge -y \
+        build-essential \
+        python3-dev && \
+    apt-get autoremove -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
-ENV REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
-ENV CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
-ENV PIP_CERT=/etc/ssl/certs/ca-certificates.crt
-
+# Switch to spacelift user
 USER spacelift
