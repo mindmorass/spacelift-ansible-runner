@@ -23,6 +23,7 @@ RUN apt-get update && \
         git && \
     pip3 install --no-cache-dir --break-system-packages \
         ansible \
+        ansible ansible-runner \
         pywinrm[kerberos] && \
     apt-get purge -y \
         build-essential \
