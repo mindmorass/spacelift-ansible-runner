@@ -15,6 +15,7 @@ RUN apt-get update && \
         python3-dev \
         build-essential \
         libffi-dev \
+        ssh \
         libssl-dev \
         libkrb5-dev \
         krb5-user \
