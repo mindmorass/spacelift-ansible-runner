@@ -62,6 +62,3 @@ RUN chmod +x /usr/local/bin/krb5-setup.sh
 # WinRM auth validation script for NTLM/Kerberos smoke tests
 COPY scripts/winrm-auth-test.sh /usr/local/bin/winrm-auth-test.sh
 RUN chmod +x /usr/local/bin/winrm-auth-test.sh
-
-# Switch to spacelift user
-USER spacelift
